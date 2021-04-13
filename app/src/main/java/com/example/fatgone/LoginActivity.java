@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private EditText eName;
     private EditText ePassword;
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         loginButton = (Button) findViewById(R.id.LoginButton);
         eName = (EditText) findViewById(R.id.etUsername);
         ePassword = (EditText) findViewById(R.id.etPassword);
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (inputName.equals(username) && inputPassword.equals(password)) {
             Toast.makeText(this, "Login succesfull !", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MainActivity.this, //Add home screen activity);
+            Intent intent = new Intent(LoginActivity.this, //Add home screen activity);
             startActivity(intent);
         }
         else {

@@ -2,13 +2,48 @@ package com.example.fatgone;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+    private Button loginButton;
+    private EditText eName;
+    private EditText ePassword;
+
+    private String password = "12345678";
+    private String username = "Admin";
+
+    String inputName;
+    String inputPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        loginButton = (Button) findViewById(R.id.LoginButton);
+        eName = (EditText) findViewById(R.id.etUsername);
+        ePassword = (EditText) findViewById(R.id.etPassword);
+
+        inputName = "";
+        inputPassword = "";
+
+    }
+
+    public void login (View v){
+        inputName = eName.getText().toString();
+        inputPassword = ePassword.getText().toString();
+
+        if (inputName.equals(username) && inputPassword.equals(password)) {
+            Toast.makeText(this, "Login succesfull !", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, //Add home screen activity);
+            startActivity(intent);
+        }
+        else {
+            Toast.makeText(this, "Login failed !", Toast.LENGTH_SHORT).show();
+        }
     }
 }

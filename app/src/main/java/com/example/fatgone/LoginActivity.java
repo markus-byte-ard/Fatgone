@@ -14,8 +14,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText eName;
     private EditText ePassword;
 
-    private String password = "12345678";
-    private String username = "Admin";
+    final private String password = "12345678";
+    final private String username = "Admin";
 
     String inputName;
     String inputPassword;
@@ -30,7 +30,6 @@ public class LoginActivity extends AppCompatActivity {
 
         inputName = "";
         inputPassword = "";
-
     }
 
     public void login (View v){

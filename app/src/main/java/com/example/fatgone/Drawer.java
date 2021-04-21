@@ -1,25 +1,22 @@
 package com.example.fatgone;
 
-import androidx.annotation.NonNull;
+import android.app.Activity;
+import android.os.Bundle;
+
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
+public class Drawer extends AppCompatActivity {
 
-import com.google.android.material.navigation.NavigationView;
-
-public class MainActivity extends Drawer {
     private DrawerLayout drawer;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -39,20 +36,4 @@ public class MainActivity extends Drawer {
             super.onBackPressed();
         }
     }
-
-    /*
-    public void loadSettings () {
-        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_settings:
-                loadSettings();
-                break;
-        }
-        return true;
-    }*/
 }

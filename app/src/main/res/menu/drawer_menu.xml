@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="bottom"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="Home"/>
+        <item
+            android:id="@+id/nav_exercise"
+            android:icon="@drawable/ic_baseline_exercise_24"
+            android:title="Exercise"/>
+        <item
+            android:id="@+id/nav_calories"
+            android:icon="@drawable/ic_baseline_calories_24"
+            android:title="Calories"/>
+        <item
+            android:id="@+id/nav_sleep"
+            android:icon="@drawable/ic_baseline_sleep_24"
+            android:title="Sleep"/>
+    </group>
+</menu>

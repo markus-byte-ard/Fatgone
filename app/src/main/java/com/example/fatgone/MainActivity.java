@@ -46,14 +46,18 @@ public class MainActivity extends Drawer {
         startActivity(intent);
     }*/
 
-    /*
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_settings:
-                loadFragment();
-                break;
+        drawerLayout.closeDrawer(GravityCompat.START);
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        if (item.getItemId() == R.id.miHome){
+            fragmentTransaction.replace(R.id.fragment_container, new MainFragment());
+        } else if (item.getItemId() == R.id.miSettings){
+            fragmentTransaction.replace(R.id.fragment_container, new FragmentSettings());
         }
+        fragmentTransaction.commit();
         return true;
-    }*/
+    }
 }

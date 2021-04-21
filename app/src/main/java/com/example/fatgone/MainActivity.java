@@ -41,16 +41,17 @@ public class MainActivity extends Drawer {
     }
 
     /*
-    public void loadSettings () {
+    public void loadFragment (String fragName) {
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
-    }
+    }*/
 
+    /*
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_settings:
-                loadSettings();
+                loadFragment();
                 break;
         }
         return true;

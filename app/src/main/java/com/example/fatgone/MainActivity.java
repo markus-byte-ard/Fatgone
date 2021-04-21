@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -16,7 +17,7 @@ import android.widget.EditText;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends Drawer {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
@@ -33,11 +34,11 @@ public class MainActivity extends Drawer {
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener();
+        navigationView.setNavigationItemSelectedListener(this);
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        toggle.syncState();
+        actionBarDrawerToggle.syncState();
     }
 
     public void onBackPressed() {
@@ -54,16 +55,15 @@ public class MainActivity extends Drawer {
         startActivity(intent);
     }*/
 
-
-    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         drawerLayout.closeDrawer(GravityCompat.START);
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        if (item.getItemId() == R.id.miHome){
-            fragmentTransaction.replace(R.id.fragment_container, new MainFragment());
-        } else if (item.getItemId() == R.id.miSettings){
-            fragmentTransaction.replace(R.id.fragment_container, new FragmentSettings());
+        if (item.getItemId() == R.id.nav_exercise){
+            fragmentTransaction.replace(R.id.fragment_container, new FragmentExercise());
+            System.out.print("test");
+        } else if (item.getItemId() == R.id.nav_calories){
+            //fragmentTransaction.replace(R.id.fragment_container, new FragmentCalories());
         }
         fragmentTransaction.commit();
         return true;

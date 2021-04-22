@@ -63,7 +63,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction.replace(R.id.fragment_container, new FragmentExercise());
             System.out.print("test");
         } else if (item.getItemId() == R.id.nav_calories){
-            //fragmentTransaction.replace(R.id.fragment_container, new FragmentCalories());
+            fragmentTransaction.replace(R.id.fragment_container, new FragmentCalories());
+        } else if (item.getItemId() == R.id.nav_profile){
+            fragmentTransaction.replace(R.id.fragment_container, new YouActivity());
+        } else if (item.getItemId() == R.id.nav_sleep){
+            fragmentTransaction.replace(R.id.fragment_container, new FragmentSleep());
+        } else if (item.getItemId() == R.id.nav_home){
+            fragmentTransaction.replace(R.id.fragment_container, new FragmentHome());
         }
         fragmentTransaction.commit();
         return true;

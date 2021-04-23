@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "556030753338",
+    "project_id": "fatgone-2e506",
+    "storage_bucket": "fatgone-2e506.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556030753338:android:628e1df1378ac5d4229303",
+        "android_client_info": {
+          "package_name": "com.example.fatgone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "556030753338-kkohu9hk0fcanmc6p4kju19hmf4jns36.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-xZOX5Z6ezfRA3CqrKxasnT6Pl6vXdaI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "556030753338-kkohu9hk0fcanmc6p4kju19hmf4jns36.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

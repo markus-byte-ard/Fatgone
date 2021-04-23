@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
+    // USER //
+    User user = new User();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +70,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         Fragment newFrag;
+        /*
+        case (R.id.button_id):
+            newFrag = new JavaClass();
+            break;
+        */
         switch (item.getItemId()) {
             case R.id.nav_exercise:
                 newFrag = new FragmentExercise();

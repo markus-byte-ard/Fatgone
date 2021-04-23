@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -39,6 +40,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+
+        // Load home fragment
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, new FragmentHome());
+        fragmentTransaction.commit();
     }
 
     public void onBackPressed() {
@@ -59,18 +66,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawer(GravityCompat.START);
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        if (item.getItemId() == R.id.nav_exercise){
-            fragmentTransaction.replace(R.id.fragment_container, new FragmentExercise());
-            System.out.print("test");
-        } else if (item.getItemId() == R.id.nav_calories){
-            fragmentTransaction.replace(R.id.fragment_container, new FragmentCalories());
-        } else if (item.getItemId() == R.id.nav_profile){
-            fragmentTransaction.replace(R.id.fragment_container, new YouActivity());
-        } else if (item.getItemId() == R.id.nav_sleep){
-            fragmentTransaction.replace(R.id.fragment_container, new FragmentSleep());
-        } else if (item.getItemId() == R.id.nav_home){
-            fragmentTransaction.replace(R.id.fragment_container, new FragmentHome());
+        Fragment newFrag;
+        switch (item.getItemId()) {
+            case R.id.nav_exercise:
+                newFrag = new FragmentExercise();
+                break;
+            case R.id.nav_calories:
+                newFrag = new FragmentCalories();
+                break;
+            case R.id.nav_sleep:
+                newFrag = new FragmentSleep();
+                break;
+            case R.id.nav_profile:
+                newFrag = new FragmentProfile();
+                break;
+            default:
+                newFrag = new FragmentHome();
         }
+        fragmentTransaction.replace(R.id.fragment_container, newFrag);
         fragmentTransaction.commit();
         return true;
     }

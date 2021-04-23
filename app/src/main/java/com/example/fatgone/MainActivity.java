@@ -14,9 +14,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
@@ -25,9 +29,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+    Fragment newFrag;
 
     // USER //
-    User user = new User();
+    User curUser = new User();
+
+    FirebaseHandler firebase = new FirebaseHandler();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, new FragmentHome());
         fragmentTransaction.commit();
+
+        firebase.saveUser(curUser);
     }
 
     public void onBackPressed() {
@@ -69,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawer(GravityCompat.START);
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment newFrag;
         /*
         case (R.id.button_id):
             newFrag = new JavaClass();
@@ -90,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             default:
                 newFrag = new FragmentHome();
+                System.out.println("Fuck");
         }
         fragmentTransaction.replace(R.id.fragment_container, newFrag);
         fragmentTransaction.commit();

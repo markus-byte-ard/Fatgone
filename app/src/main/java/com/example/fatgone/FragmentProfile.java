@@ -106,7 +106,7 @@ public class FragmentProfile extends Fragment {
         yourBmi.setText("BMI: " + String.valueOf(argBmi) + " kg/m^2");
     }
 
-    public double getWeight(){
+    public double sendFragWeight(){
         if (!editWeightInput.getText().toString().isEmpty()) {
             argWeight = Double.parseDouble(editWeightInput.getText().toString());
             yourWeight.setText("Weight: " + argWeight + " kg");
@@ -115,7 +115,7 @@ public class FragmentProfile extends Fragment {
         return argWeight;
     }
 
-    public double getHeight(){
+    public double sendFragHeight(){
         if (!editHeightInput.getText().toString().isEmpty()) {
             argHeight = Double.parseDouble(editHeightInput.getText().toString());
             yourHeight.setText("Weight: " + argHeight + " kg");
@@ -124,7 +124,7 @@ public class FragmentProfile extends Fragment {
         return argHeight;
     }
 
-    public double getBmi(){
+    public double sendFragBmi(){
         return argBmi;
     }
 }

@@ -43,7 +43,7 @@ public class FragmentExercise extends Fragment {
             exerciseEnough.setText("you have exercised enough!");
         }
         yourExercise.setText("Exercise today: " + argExercise + " min");
-
+        /*
         setExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +62,24 @@ public class FragmentExercise extends Fragment {
                 }
             }
         });
+         */
+
     }
+    public double sendFragExercise() {
+        if (!editExerciseInput.getText().toString().isEmpty()) {
+            argExercise = Double.parseDouble(editExerciseInput.getText().toString());
+
+            argExercise = (Math.round(argExercise * 100.0) / 100.0);
+            if (argExercise < 30) {
+                exerciseEnough.setText("you should be exercising more!");
+            } else {
+                exerciseEnough.setText("you have exercised enough!");
+            }
+            yourExercise.setText("Exercise today: " + argExercise + " min");
+
+        }
+        return argExercise;
+    }
+
 
 }

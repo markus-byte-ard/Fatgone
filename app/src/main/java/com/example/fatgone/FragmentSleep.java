@@ -46,7 +46,7 @@ public class FragmentSleep extends Fragment {
             sleptEnough.setText("you have slept enough!");
         }
         yourSleep.setText("Sleep tonight: "+argSleep+" h");
-
+        /*
         setSleep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +66,25 @@ public class FragmentSleep extends Fragment {
                 }
             }
         });
+        */
 
     }
+    public double sendFragSleep() {
+        if (!editSleepInput.getText().toString().isEmpty()) {
+            argSleep = Double.parseDouble(editSleepInput.getText().toString());
+
+            //yourHeight.setText("Height: "+editHeightInput.getText().toString()+" cm"); // same without needing height
+            argSleep = (Math.round(argSleep * 100.0) / 100.0);
+            if (argSleep < 8){
+                sleptEnough.setText("you should be sleeping more!");
+            }
+            else {
+                sleptEnough.setText("you have slept enough!");
+            }
+            yourSleep.setText("Sleep tonight: "+argSleep+" h");
+        }
+        return argSleep;
+    }
+
+
 }

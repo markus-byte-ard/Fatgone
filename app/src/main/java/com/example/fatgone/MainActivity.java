@@ -131,20 +131,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void getFragProfile(View view){
         fragmentManager = getSupportFragmentManager();
         FragmentProfile frag = (FragmentProfile) fragmentManager.findFragmentById(R.id.fragment_container); //Retrieve the fragment and save it into a variable
-        curUser.setWeight(frag.getWeight());
-        curUser.setHeight(frag.getHeight());
-        curUser.setBmi(frag.getBmi());
+        curUser.setWeight(frag.sendFragWeight());
+        curUser.setHeight(frag.sendFragHeight());
+        curUser.setBmi(frag.sendFragBmi());
         //testi
-        System.out.println("paino on "+frag.getWeight());
-        System.out.println("pituus on "+frag.getHeight());
-        System.out.println("bmi on "+frag.getBmi());
+        System.out.println("paino on "+frag.sendFragWeight());
+        System.out.println("pituus on "+frag.sendFragHeight());
+        System.out.println("bmi on "+frag.sendFragBmi());
 
     }
     public void getFragCalories(View view){
         fragmentManager = getSupportFragmentManager();
         FragmentCalories frag = (FragmentCalories) fragmentManager.findFragmentById(R.id.fragment_container); //Retrieve the fragment and save it into a variable
-
-        curUser.setCalories(frag.getCalories());
+        curUser.setCalories(frag.sendFragCalories());
+    }
+    public void getFragSleep(View view){
+        fragmentManager = getSupportFragmentManager();
+        FragmentSleep frag = (FragmentSleep) fragmentManager.findFragmentById(R.id.fragment_container); //Retrieve the fragment and save it into a variable
+        curUser.setSleep(frag.sendFragSleep());
+    }
+    public void getFragExercise(View view){
+        fragmentManager = getSupportFragmentManager();
+        FragmentExercise frag = (FragmentExercise) fragmentManager.findFragmentById(R.id.fragment_container); //Retrieve the fragment and save it into a variable
+        curUser.setExercise(frag.sendFragExercise());
     }
 
 

@@ -10,6 +10,7 @@
         android:id="@+id/setExercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="getFragExercise"
         android:text="Set exercise"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

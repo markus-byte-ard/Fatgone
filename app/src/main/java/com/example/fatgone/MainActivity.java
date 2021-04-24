@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -59,7 +60,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         curUser.setUID(userUID);
 
         // FIREBASE TEST //
-        //updateFirebaseUser();
+        //updateFirebaseUser(curUser);
+        firebase.fetchNewestData(curUser);
 
         // Initialise drawer
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -73,7 +75,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Load home fragment
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, new FragmentHome());
+        newFrag = new FragmentHome();
+        Bundle bundle = new Bundle();
+        bundle.putString("keyName", curUser.getName());
+        bundle.putDouble("keyBmi", curUser.getBmi());
+        bundle.putDouble("keyWeight", curUser.getWeight());
+        bundle.putDouble("keyHeight", curUser.getHeight());
+        bundle.putDouble("keySleep", curUser.getSleep());
+        bundle.putDouble("keyCalories", curUser.getCalories());
+        bundle.putDouble("keyExercise", curUser.getExercise());
+        newFrag.setArguments(bundle);
+        fragmentTransaction.replace(R.id.fragment_container, newFrag);
         fragmentTransaction.commit();
     }
 
@@ -138,33 +150,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void getFragWeight(View view){
+    public void getFragProfile(View view){
         fragmentManager = getSupportFragmentManager();
         FragmentProfile frag = (FragmentProfile) fragmentManager.findFragmentById(R.id.fragment_container); //Retrieve the fragment and save it into a variable
+        curUser.setWeight(frag.sendFragWeight());
+        curUser.setHeight(frag.sendFragHeight());
+        curUser.setBmi(frag.sendFragBMI());
+        curUser.setName(frag.sendFragName());
+        //testi
+        System.out.println("paino on "+frag.sendFragWeight());
+        System.out.println("pituus on "+frag.sendFragHeight());
+        System.out.println("bmi on "+frag.sendFragBMI());
+        System.out.println("nimi on "+frag.sendFragName());
 
-        System.out.println("###############################################################################");
-
-        curUser.setWeight(frag.getWeight());
-
-        updateFirebaseUser();
     }
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void getFragCalories(View view){
         fragmentManager = getSupportFragmentManager();
         FragmentCalories frag = (FragmentCalories) fragmentManager.findFragmentById(R.id.fragment_container); //Retrieve the fragment and save it into a variable
-
-        curUser.setCalories(frag.getCalories());
-
-        updateFirebaseUser();
+        curUser.setCalories(frag.sendFragCalories());
     }
+    public void getFragSleep(View view){
+        fragmentManager = getSupportFragmentManager();
+        FragmentSleep frag = (FragmentSleep) fragmentManager.findFragmentById(R.id.fragment_container); //Retrieve the fragment and save it into a variable
+        curUser.setSleep(frag.sendFragSleep());
+    }
+    public void getFragExercise(View view){
+        fragmentManager = getSupportFragmentManager();
+        FragmentExercise frag = (FragmentExercise) fragmentManager.findFragmentById(R.id.fragment_container); //Retrieve the fragment and save it into a variable
+        curUser.setExercise(frag.sendFragExercise());
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void saveUserData (View view) {
+        firebase.saveUser(curUser);
 
+    }
 
     //////// FIREBASE ////////
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void updateFirebaseUser () {
-        firebase.saveUser(curUser);
+    public void updateFirebaseUser (User user) {
+        firebase.saveUser(user);
     };
-
 }

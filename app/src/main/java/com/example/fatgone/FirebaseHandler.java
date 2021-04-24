@@ -2,16 +2,22 @@ package com.example.fatgone;
 
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.model.ServerTimestamps;
 import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firestore.v1.DocumentTransform;
@@ -35,13 +41,13 @@ public class FirebaseHandler {
     //DocumentTransform.FieldTransform.ServerValue.REQUEST_TIME
 
 
-    // SAVE USER //
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void saveUser (User user) {
+        long epoch = Instant.now().getEpochSecond();
+        user.setEpoch(epoch);
+
         Map<String, Object> userMap = createMap(user);
 
-        //System.out.println("-----------------------------------------" + time + "-----------------------------------------");
-        long epoch = Instant.now().toEpochMilli();
         UID = user.getUID();
         docRef = FirebaseFirestore.getInstance().document("users/" + UID).collection("Data").document(Long.toString(epoch));
 
@@ -68,6 +74,7 @@ public class FirebaseHandler {
 
     private Map<String, Object> createMap (User user) {
         Map<String, Object> userMap = new HashMap<String, Object>();
+        userMap.put("epoch", user.getEpoch());
         userMap.put("UID", user.getUID());
         userMap.put("name", user.getName());
         userMap.put("weight", user.getWeight());
@@ -78,6 +85,23 @@ public class FirebaseHandler {
         userMap.put("calories", user.getCalories());
 
         return userMap;
+    }
+
+    public void fetchNewestData(User user) {
+        UID = user.getUID();
+        Query query = FirebaseFirestore.getInstance().document("users/" + UID).collection("Data").orderBy("epoch", Query.Direction.DESCENDING).limit(1);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, "#########################" + document.getId() + " => " + document.getData() + "#########################");
+                    }
+                } else {
+                    Log.w(TAG, "Error getting documents.", task.getException());
+                }
+            }
+        });
     }
     /*
     private class FirebaseHandler () {

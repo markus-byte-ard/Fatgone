@@ -9,6 +9,7 @@ public class User {
     private double exercise = 2;    //min
     private double sleep = 5;       //h
     private double calories = 200;  //kCal
+    private long epoch = 0;
 
     public User() {
         this.setName("Adam");
@@ -37,6 +38,7 @@ public class User {
     public void setBmi(double bmi) {
         this.bmi = bmi;
     }
+
     public void setSleep(double sleep) {
         this.sleep = sleep;
     }
@@ -49,8 +51,11 @@ public class User {
         this.exercise = exercise;
     }
 
+    public void setEpoch(long epoch) { this.epoch = epoch; }
+
     // GET METHODS
     public String getUID() { return this.UID; }
+    public long getEpoch() { return this.epoch; }
     public double getExercise() { return this.exercise; }
     public double getCalories() { return this.calories; }
     public double getSleep() { return this.sleep; }

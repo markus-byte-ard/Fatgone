@@ -12,12 +12,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
 public class FragmentCalories extends Fragment {
     View view;
     private Button setCalories;
     private EditText editCaloriesInput;
     private TextView yourCalories;
     private TextView caloriesEnough;
+    private GraphView graph;
     double argCalories;
 
     @Nullable
@@ -34,6 +39,18 @@ public class FragmentCalories extends Fragment {
         caloriesEnough = (TextView) view.findViewById(R.id.caloriesEnough);
         editCaloriesInput = (EditText) view.findViewById(R.id.editCaloriesInput);
         setCalories = (Button) view.findViewById(R.id.setCalories);
+        graph = (GraphView) view.findViewById(R.id.graph);
+
+        // Graph test
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[] {
+                new DataPoint(0, 1),
+                new DataPoint(1, 5),
+                new DataPoint(2, 3),
+                new DataPoint(3, 2),
+                new DataPoint(4, 6)
+        });
+        graph.addSeries(series);
+
         argCalories = (Math.round(argCalories * 100.0) / 100.0);
         if (argCalories < 30) {
             caloriesEnough.setText("you should be eating more!");
@@ -43,9 +60,9 @@ public class FragmentCalories extends Fragment {
         yourCalories.setText("Eaten today: " + argCalories + " calories");
     }
 
-    public double getCalories() {
+    public double sendFragCalories() {
         if (!editCaloriesInput.getText().toString().isEmpty()) {
-            argCalories = Double.parseDouble(editCaloriesInput.getText().toString());
+            argCalories = argCalories + Double.parseDouble(editCaloriesInput.getText().toString());
 
             //yourHeight.setText("Height: "+editHeightInput.getText().toString()+" cm"); // same without needing height
             argCalories = (Math.round(argCalories * 100.0) / 100.0);

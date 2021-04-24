@@ -1,8 +1,10 @@
 package com.example.fatgone;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -15,19 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     View view;
@@ -58,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         curUser.setUID(userUID);
 
         // FIREBASE TEST //
-        updateFirebaseUser(curUser);
+        //updateFirebaseUser();
 
         // Initialise drawer
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -137,25 +128,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void getFragWeight(View view){
-        double tempPaino;
-        System.out.println("heippa");
-
         fragmentManager = getSupportFragmentManager();
-        FragmentProfile newFrag = (FragmentProfile) fragmentManager.findFragmentById(R.id.fragment_container);
-        tempPaino = newFrag.fragToActWeight();
-        System.out.println("paino on "+tempPaino);
-        curUser.setWeight(tempPaino);
+        FragmentProfile frag = (FragmentProfile) fragmentManager.findFragmentById(R.id.fragment_container); //Retrieve the fragment and save it into a variable
+        System.out.println("###############################################################################");
+
+        curUser.setWeight(frag.getWeight());
+
+        updateFirebaseUser();
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void getFragCalories(View view){
-
-        double tempCalories;
         fragmentManager = getSupportFragmentManager();
-        FragmentCalories newFrag = (FragmentCalories) fragmentManager.findFragmentById(R.id.fragment_container);
-        tempCalories = newFrag.fragToActCalories();
-        curUser.setCalories(tempCalories);
-        System.out.println("heippa calories: "+tempCalories);
+        FragmentCalories frag = (FragmentCalories) fragmentManager.findFragmentById(R.id.fragment_container); //Retrieve the fragment and save it into a variable
 
+        curUser.setCalories(frag.getCalories());
+
+        updateFirebaseUser();
     }
 
 
@@ -163,8 +153,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //////// FIREBASE ////////
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void updateFirebaseUser (User user) {
-        firebase.saveUser(user);
+    public void updateFirebaseUser () {
+        firebase.saveUser(curUser);
     };
 
 }

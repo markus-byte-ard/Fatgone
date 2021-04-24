@@ -96,13 +96,12 @@ public class FragmentProfile extends Fragment {
                     argBmi = (argWeight / ((argHeight / 100) * (argHeight / 100)));
                     argBmi = (Math.round(argBmi * 100.0) / 100.0);
                     yourBmi.setText("BMI: " + String.valueOf(argBmi) + " kg/m^2");
-                    fragToActWeight();
                 }
             }
         });
     }
 
-    public double fragToActWeight(){
+    public double getWeight(){
         System.out.println("paino on "+argWeight);
         return argWeight;
     }

@@ -28,19 +28,21 @@ import java.util.Map;
 public class FirebaseHandler {
     public static final String TAG = "FirebaseHandler";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public String UID = "4Kf6KVJSFVojMtKwIFlD"; // TEMPORARY UID FOR TESTING
+    public String UID;
     private DocumentReference docRef;
     //@ServerTimestamp Date time;
     //@ServerTimestamp Timestamp time;
     //DocumentTransform.FieldTransform.ServerValue.REQUEST_TIME
 
 
+    // SAVE USER //
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void saveUser (User user) {
         Map<String, Object> userMap = createMap(user);
 
         //System.out.println("-----------------------------------------" + time + "-----------------------------------------");
         long epoch = Instant.now().toEpochMilli();
+        UID = user.getUID();
         docRef = FirebaseFirestore.getInstance().document("users/" + UID).collection("Data").document(Long.toString(epoch));
 
         /*
@@ -54,22 +56,26 @@ public class FirebaseHandler {
         docRef.set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.d(TAG, "User has been saved");
+                Log.d(TAG, "############################ User has been saved ############################");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "Error when saving user", e);
+                Log.d(TAG, "############################ Error while saving user ############################", e);
             }
         });
     };
 
     private Map<String, Object> createMap (User user) {
         Map<String, Object> userMap = new HashMap<String, Object>();
+        userMap.put("UID", user.getUID());
         userMap.put("name", user.getName());
         userMap.put("weight", user.getWeight());
         userMap.put("height", user.getHeight());
         userMap.put("bmi", user.getBmi());
+        userMap.put("exercise", user.getExercise());
+        userMap.put("sleep", user.getSleep());
+        userMap.put("calories", user.getCalories());
 
         return userMap;
     }

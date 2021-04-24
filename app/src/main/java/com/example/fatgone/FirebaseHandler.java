@@ -36,10 +36,6 @@ public class FirebaseHandler {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     public String UID;
     private DocumentReference docRef;
-    //@ServerTimestamp Date time;
-    //@ServerTimestamp Timestamp time;
-    //DocumentTransform.FieldTransform.ServerValue.REQUEST_TIME
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void saveUser (User user) {
@@ -49,15 +45,9 @@ public class FirebaseHandler {
         Map<String, Object> userMap = createMap(user);
 
         UID = user.getUID();
-        docRef = FirebaseFirestore.getInstance().document("users/" + UID).collection("Data").document(Long.toString(epoch));
+        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" + UID + "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 
-        /*
-        long epoch = Instant.now().toEpochMilli();
-        userMap.put("epoch", epoch);
-        Timestamp time = new Timestamp.now();
-        //DocumentTransform.FieldTransform.ServerValue time = DocumentTransform.FieldTransform.ServerValue.REQUEST_TIME;
-        userMap.put("epoch", time);
-        long epoch = Instant.now().toEpochMilli();*/
+        docRef = FirebaseFirestore.getInstance().collection(UID).document("users").collection("data").document(Long.toString(epoch));
 
         docRef.set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -87,38 +77,47 @@ public class FirebaseHandler {
         return userMap;
     }
 
-    public void fetchNewestData(User user) {
+    public User fetchNewestData(User user) {
         UID = user.getUID();
+        final User[] newUser = {new User()};
+
         Query query = FirebaseFirestore.getInstance().document("users/" + UID).collection("Data").orderBy("epoch", Query.Direction.DESCENDING).limit(1);
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, "#########################" + document.getId() + " => " + document.getData() + "#########################");
+                        if (document.exists()) {
+                            Log.d(TAG, "#########################" + document.getId() + " => " + document.getData() + "#########################");
+                            newUser[0] = createUserFromMap(document.getData());
+                        } else {
+                            System.out.println("JÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖTI");
+                        }
                     }
                 } else {
-                    Log.w(TAG, "Error getting documents.", task.getException());
+                    Log.w(TAG, "######################### Error getting documents. #########################", task.getException());
+                    User nUser = new User();
+                    nUser.setUID(UID);
+                    newUser[0] = nUser;
                 }
             }
         });
+
+        return newUser[0];
     }
-    /*
-    private class FirebaseHandler () {
-        // Add a new document with a generated ID
-    db.collection("users")
-            .add(user)
-            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error adding document", e);
-            }
-        });
-    }*/
+
+    private User createUserFromMap (Map <String, Object> data) {
+        User user = new User();
+        user.setUID((String) data.get("UID"));
+        user.setBmi((double) data.get("bmi"));
+        user.setHeight((double) data.get("height"));
+        user.setWeight((double) data.get("weight"));
+        user.setName((String) data.get("name"));
+        user.setCalories((double) data.get("calories"));
+        user.setEpoch((long) data.get("epoch"));
+        user.setExercise((double) data.get("exercise"));
+        user.setSleep((double) data.get("sleep"));
+
+        return user;
+    }
 }

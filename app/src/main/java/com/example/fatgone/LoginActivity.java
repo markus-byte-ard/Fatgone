@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -87,9 +88,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private String retrieveUID() {
         FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser() ;
-        String userUID = fUser.getUid();
+        if (fUser != null) {
+            String userUID = fUser.getUid();
+            return userUID;
+        } else {
+            Log.d("LoginActivity", "###############################" + "CRITICAL ERROR LOADING USER UID" + "###############################");
+            return "";
+        }
 
-        return userUID;
     };
 
     private void loadHome() {

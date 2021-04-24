@@ -129,24 +129,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void getFragWeight(View view){
-        double tempPaino;
-        System.out.println("heippa");
-
         fragmentManager = getSupportFragmentManager();
-        FragmentProfile newFrag = (FragmentProfile) fragmentManager.findFragmentById(R.id.fragment_container);
-        tempPaino = newFrag.fragToActWeight();
-        System.out.println("paino on "+tempPaino);
-        curUser.setWeight(tempPaino);
+        FragmentProfile frag = (FragmentProfile) fragmentManager.findFragmentById(R.id.fragment_container); //Retrieve the fragment and save it into a variable
+
+        curUser.setWeight(frag.getWeight());
     }
     public void getFragCalories(View view){
-
-        double tempCalories;
         fragmentManager = getSupportFragmentManager();
-        FragmentCalories newFrag = (FragmentCalories) fragmentManager.findFragmentById(R.id.fragment_container);
-        tempCalories = newFrag.fragToActCalories();
-        curUser.setCalories(tempCalories);
-        System.out.println("heippa calories: "+tempCalories);
+        FragmentCalories frag = (FragmentCalories) fragmentManager.findFragmentById(R.id.fragment_container); //Retrieve the fragment and save it into a variable
 
+        curUser.setCalories(frag.getCalories());
     }
 
 

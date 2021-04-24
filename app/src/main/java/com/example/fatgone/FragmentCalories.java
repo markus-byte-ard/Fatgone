@@ -43,7 +43,7 @@ public class FragmentCalories extends Fragment {
         yourCalories.setText("Eaten today: " + argCalories + " calories");
     }
 
-    public double fragToActCalories() {
+    public double getCalories() {
         if (!editCaloriesInput.getText().toString().isEmpty()) {
             argCalories = Double.parseDouble(editCaloriesInput.getText().toString());
 

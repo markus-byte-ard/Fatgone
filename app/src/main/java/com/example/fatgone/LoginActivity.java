@@ -1,97 +1,88 @@
 package com.example.fatgone;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Map;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private EditText eName;
     private EditText ePassword;
     private TextView eRegister;
-    private CheckBox eRememberMe;
+    private ProgressBar eLoginProg;
 
-    public Credentials credentials;
-
-    boolean isValid = false;
-
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor sharedPreferencesEditor;
+    FirebaseAuth fAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         loginButton = (Button) findViewById(R.id.LoginButton);
-        eName = (EditText) findViewById(R.id.etUsername);
+        eName = (EditText) findViewById(R.id.etEmail);
         ePassword = (EditText) findViewById(R.id.etPassword);
         eRegister = (TextView) findViewById(R.id.tvRegister);
-        eRememberMe = (CheckBox) findViewById(R.id.cbRememberMe);
+        eLoginProg = (ProgressBar) findViewById(R.id.progressBarLogin);
 
-        credentials = new Credentials();
+        fAuth = FirebaseAuth.getInstance();
 
-        sharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDB", MODE_PRIVATE);
-        sharedPreferencesEditor = sharedPreferences.edit();
-
-        if(sharedPreferences != null){
-
-            Map<String, ?> preferencesMap = sharedPreferences.getAll();
-
-            if(preferencesMap.size() != 0){
-                credentials.loadCredentials(preferencesMap);
-            }
-
-            String savedUsername = sharedPreferences.getString("LastSavedUsername", "");
-            String savedPassword = sharedPreferences.getString("LastSavedPassword", "");
-
-            if(sharedPreferences.getBoolean("RememberMeCheckBox", false)){
-                eName.setText(savedUsername);
-                ePassword.setText(savedPassword);
-                eRememberMe.setChecked(true);
-            }
-        }
-        eRememberMe.setOnClickListener(v -> {
-
-            sharedPreferencesEditor.putBoolean("RememberMeCheckBox", eRememberMe.isChecked());
-            sharedPreferencesEditor.apply();
-        });
-        eRegister.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegistrationActivity.class)));
+        eRegister.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), RegistrationActivity.class)));
         loginButton.setOnClickListener(v -> {
+            String email = eName.getText().toString().trim();
+            String password = ePassword.getText().toString().trim();
 
-            String inputName = eName.getText().toString();
-            String inputPassword = ePassword.getText().toString();
-
-            if(inputName.isEmpty() || inputPassword.isEmpty())
-            {
-                Toast.makeText(LoginActivity.this, "Please enter all the details correctly!", Toast.LENGTH_SHORT).show();
-            }else{
-
-                isValid = validate(inputName, inputPassword);
-
-                if(!isValid){
-                    Toast.makeText(LoginActivity.this, "Incorrect credentials entered!", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-
-                    sharedPreferencesEditor.putString("LastSavedUsername", inputName);
-                    sharedPreferencesEditor.putString("LastSavedPassword", inputPassword);
-                    sharedPreferencesEditor.apply();
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                }
+            if (TextUtils.isEmpty(email)) {
+                eName.setError("Email is required!");
+                return;
+            } if (TextUtils.isEmpty(password)) {
+                ePassword.setError("Password is required!");
+                return;
+            } if (password.length() < 8) {
+                ePassword.setError("Password must be at least 8 characters!");
+                return;
             }
+            eLoginProg.setVisibility(View.VISIBLE);
+            System.out.println(email);
+            System.out.println(password);
+            fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                        loadHome();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Error ! " + task.getException(), Toast.LENGTH_SHORT).show();
+                        eLoginProg.setVisibility(View.GONE);
+                    }
+                }
+            });
         });
     }
-    private boolean validate(String name, String password){
-        return credentials.verifyCredentials(name, password);
-    }
+
+    private String retrieveUID() {
+        FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser() ;
+        String userUID = fUser.getUid();
+
+        return userUID;
+    };
+
+    private void loadHome() {
+        Intent home = new Intent(LoginActivity.this, MainActivity.class);
+        home.putExtra("userUID", retrieveUID());
+        startActivity(home);
+    };
 }

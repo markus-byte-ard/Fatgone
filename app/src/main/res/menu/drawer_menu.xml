@@ -25,5 +25,9 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_baseline_profile_24"
             android:title="Profile"/>
+        <item
+            android:id="@+id/nav_LogOut"
+            android:icon="@drawable/ic_baseline_power_settings_new_24"
+            android:title="Log Out"/>
     </group>
 </menu>

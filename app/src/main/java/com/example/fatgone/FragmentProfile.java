@@ -18,14 +18,20 @@ public class FragmentProfile extends Fragment {
     private Button setHeight;
     private EditText editWeightInput;
     private EditText editHeightInput;
+    private TextView yourName;
     private TextView yourWeight;
     private TextView yourHeight;
     private TextView yourBmi;
-
+    /*
     private double height = 0;
     private double weight = 0;
     private double bmi; // = (weight/(height*height));
 
+     */
+    double argBmi;
+    double argHeight;
+    double argWeight;
+    String argName;
 
     //You YOU = You.getInstance();
 
@@ -45,6 +51,12 @@ public class FragmentProfile extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        argName = getArguments().getString("keyName");
+        argWeight = getArguments().getDouble("keyWeight");
+        argHeight = getArguments().getDouble("keyHeight");
+        argBmi = getArguments().getDouble("keyBmi");
+
+        yourName = (TextView) view.findViewById(R.id.yourName);
         yourWeight = (TextView) view.findViewById(R.id.yourWeight);
         yourHeight = (TextView) view.findViewById(R.id.yourHeight);
         yourBmi    = (TextView) view.findViewById(R.id.yourBmi);
@@ -53,21 +65,24 @@ public class FragmentProfile extends Fragment {
         setHeight = (Button) view.findViewById(R.id.setHeight);
         setWeight = (Button) view.findViewById(R.id.setWeight);
 
-        yourHeight.setText("Height: "+height+" cm");
-        yourWeight.setText("Weight: "+weight+" kg");
+        yourName.setText(argName);
+        yourHeight.setText("Height: "+argHeight+" cm");
+        yourWeight.setText("Weight: "+argWeight+" kg");
+        argBmi = (Math.round(argBmi * 100.0) / 100.0);
+        yourBmi.setText("BMI: " + String.valueOf(argBmi) + " kg/m^2");
 
         setHeight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (!editHeightInput.getText().toString().isEmpty()) {
-                    height = Double.parseDouble(editHeightInput.getText().toString());
+                    argHeight = Double.parseDouble(editHeightInput.getText().toString());
 
                     //yourHeight.setText("Height: "+editHeightInput.getText().toString()+" cm"); // same without needing height
-                    yourHeight.setText("Height: " + height + " cm");
-                    bmi = (weight / ((height / 100) * (height / 100)));
-                    bmi = (Math.round(bmi * 100.0) / 100.0);
-                    yourBmi.setText("BMI: " + String.valueOf(bmi) + " kg/m^2");
+                    yourHeight.setText("Height: " + argHeight + " cm");
+                    argBmi = (argWeight / ((argHeight / 100) * (argHeight / 100)));
+                    argBmi = (Math.round(argBmi * 100.0) / 100.0);
+                    yourBmi.setText("BMI: " + String.valueOf(argBmi) + " kg/m^2");
                 }
             }
         });
@@ -76,13 +91,19 @@ public class FragmentProfile extends Fragment {
             public void onClick(View v) {
                 if (!editWeightInput.getText().toString().isEmpty()) {
 
-                    weight = Double.parseDouble(editWeightInput.getText().toString());
-                    yourWeight.setText("Weight: " + weight + " kg");
-                    bmi = (weight / ((height / 100) * (height / 100)));
-                    bmi = (Math.round(bmi * 100.0) / 100.0);
-                    yourBmi.setText("BMI: " + String.valueOf(bmi) + " kg/m^2");
+                    argWeight = Double.parseDouble(editWeightInput.getText().toString());
+                    yourWeight.setText("Weight: " + argWeight + " kg");
+                    argBmi = (argWeight / ((argHeight / 100) * (argHeight / 100)));
+                    argBmi = (Math.round(argBmi * 100.0) / 100.0);
+                    yourBmi.setText("BMI: " + String.valueOf(argBmi) + " kg/m^2");
+                    fragToActWeight();
                 }
             }
         });
+    }
+
+    public double fragToActWeight(){
+        System.out.println("paino on "+argWeight);
+        return argWeight;
     }
 }

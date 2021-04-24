@@ -1,14 +1,23 @@
 package com.example.fatgone;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Map;
 
@@ -16,60 +25,55 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private EditText eRegName;
     private EditText eRegPassword;
+    private EditText eRegEmail;
+    private TextView eLogin;
     private Button eRegister;
-
-    public Credentials credentials;
-
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor sharedPreferencesEditor;
+    private ProgressBar eProgress;
+    FirebaseAuth fAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        eRegName = findViewById(R.id.etRegName);
         eRegPassword = findViewById(R.id.etRegPassword);
+        eRegEmail = findViewById(R.id.etRegEmail);
+        eLogin = findViewById(R.id.tvReturn2Login);
         eRegister = findViewById(R.id.btnRegister);
+        eProgress = findViewById(R.id.progressBarRegister);
 
-        credentials = new Credentials();
+        fAuth = FirebaseAuth.getInstance();
 
-        sharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDB", MODE_PRIVATE);
-        sharedPreferencesEditor = sharedPreferences.edit();
+        eLogin.setOnClickListener(v -> startActivity(new Intent(RegistrationActivity.this, LoginActivity.class)));
+        eRegister.setOnClickListener(v -> {
 
-        if(sharedPreferences != null){
+            String regEmail = eRegEmail.getText().toString().trim();
+            String regPassword = eRegPassword.getText().toString().trim();
 
-            Map<String, ?> preferencesMap = sharedPreferences.getAll();
-
-            if(preferencesMap.size() != 0){
-                credentials.loadCredentials(preferencesMap);
+            if (TextUtils.isEmpty(regEmail)) {
+                eRegEmail.setError("Email is required!");
+                return;
+            } if (TextUtils.isEmpty(regPassword)) {
+                eRegPassword.setError("Password is required!");
+                return;
+            } if (regPassword.length() < 8 ) {
+                eRegPassword.setError("Password must be at least 8 characters!");
+                return;
             }
-        }
+            eProgress.setVisibility(View.VISIBLE);
 
-        eRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String regUsername = eRegName.getText().toString();
-                String regPassword = eRegPassword.getText().toString();
-
-                if(validate(regUsername, regPassword)) {
-
-                    if(credentials.checkUsername(regUsername)){
-                        Toast.makeText(RegistrationActivity.this, "Username already taken!", Toast.LENGTH_SHORT).show();
-                    }else{
-
-                        credentials.addCredentials(regUsername, regPassword);
-
-                        sharedPreferencesEditor.putString(regUsername, regPassword);
-                        sharedPreferencesEditor.putString("LastSavedUsername", "");
-                        sharedPreferencesEditor.putString("LastSavedPassword", "");
-                        sharedPreferencesEditor.apply();
-
+            fAuth.createUserWithEmailAndPassword(regEmail, regPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(RegistrationActivity.this, "Registeration successful!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+                    } else {
+                        Toast.makeText(RegistrationActivity.this, "Error ! " + task.getException(), Toast.LENGTH_SHORT).show();
+                        eProgress.setVisibility(View.GONE);
                     }
                 }
-            }
+            });
         });
 
     }

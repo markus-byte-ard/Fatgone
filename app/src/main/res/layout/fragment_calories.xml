@@ -6,9 +6,10 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/buttonCalories"
+        android:id="@+id/setCalories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="getFragCalories"
         android:text="Add Calories"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvCalories"
+        android:id="@+id/yourCalories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Calories today: 0 kCal"
@@ -27,5 +28,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.644" />
+
+    <EditText
+        android:id="@+id/editCaloriesInput"
+        android:layout_width="206dp"
+        android:layout_height="103dp"
+        android:ems="10"
+        android:hint="How many calories have\nyou eaten today?"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.38" />
+
+    <TextView
+        android:id="@+id/caloriesEnough"
+        android:layout_width="189dp"
+        android:layout_height="66dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.839" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -128,11 +128,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void getFragWeight(View view){
+    public void getFragProfile(View view){
         fragmentManager = getSupportFragmentManager();
         FragmentProfile frag = (FragmentProfile) fragmentManager.findFragmentById(R.id.fragment_container); //Retrieve the fragment and save it into a variable
-
         curUser.setWeight(frag.getWeight());
+        curUser.setHeight(frag.getHeight());
+        curUser.setBmi(frag.getBmi());
+        //testi
+        System.out.println("paino on "+frag.getWeight());
+        System.out.println("pituus on "+frag.getHeight());
+        System.out.println("bmi on "+frag.getBmi());
+
     }
     public void getFragCalories(View view){
         fragmentManager = getSupportFragmentManager();

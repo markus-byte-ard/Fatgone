@@ -71,6 +71,7 @@ public class FragmentProfile extends Fragment {
         argBmi = (Math.round(argBmi * 100.0) / 100.0);
         yourBmi.setText("BMI: " + String.valueOf(argBmi) + " kg/m^2");
 
+        /*
         setHeight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +97,7 @@ public class FragmentProfile extends Fragment {
                 }
             }
         });
+         */
     }
 
     private void updateBmi() {
@@ -105,6 +107,24 @@ public class FragmentProfile extends Fragment {
     }
 
     public double getWeight(){
+        if (!editWeightInput.getText().toString().isEmpty()) {
+            argWeight = Double.parseDouble(editWeightInput.getText().toString());
+            yourWeight.setText("Weight: " + argWeight + " kg");
+            updateBmi();
+        }
         return argWeight;
+    }
+
+    public double getHeight(){
+        if (!editHeightInput.getText().toString().isEmpty()) {
+            argHeight = Double.parseDouble(editHeightInput.getText().toString());
+            yourHeight.setText("Weight: " + argHeight + " kg");
+            updateBmi();
+        }
+        return argHeight;
+    }
+
+    public double getBmi(){
+        return argBmi;
     }
 }

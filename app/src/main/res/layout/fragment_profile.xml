@@ -28,6 +28,7 @@
                         android:id="@+id/setHeight"
                         android:layout_width="125dp"
                         android:layout_height="36dp"
+                        android:onClick="getFragProfile"
                         android:text="Set Height"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -66,6 +67,7 @@
                         android:id="@+id/setWeight"
                         android:layout_width="125dp"
                         android:layout_height="36dp"
+                        android:onClick="getFragProfile"
                         android:text="Set Weight"
                         android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -154,18 +156,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.461" />
-
-                    <Button
-                        android:id="@+id/button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="188dp"
-                        android:onClick="getFragWeight"
-                        android:text="Button"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.896"
-                        app:layout_constraintStart_toStartOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </FrameLayout>

@@ -13,7 +13,7 @@ public class User {
     public User() {
         this.setName("Adam");
         this.setWeight(80.0);
-        this.setHeight(1.80);
+        this.setHeight(180);
         this.setBmi(0);
     }
 

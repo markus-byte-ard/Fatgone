@@ -55,7 +55,7 @@ public class User {
     public double getCalories() { return this.calories; }
     public double getSleep() { return this.sleep; }
     public String getName() { return this.name; }
-    public Double getWeight() { return this.weight; }
-    public Double getHeight() { return this.height; }
-    public Double getBmi() { return this.bmi; }
+    public double getWeight() { return this.weight; }
+    public double getHeight() { return this.height; }
+    public double getBmi() { return this.bmi; }
 }

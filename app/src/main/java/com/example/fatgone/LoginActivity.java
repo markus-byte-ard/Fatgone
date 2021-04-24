@@ -26,6 +26,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
+    private boolean DEBUG = true;
     private Button loginButton;
     private EditText eEmail;
     private EditText ePassword;
@@ -50,6 +51,11 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(v -> {
             String email = eEmail.getText().toString().trim();
             String password = ePassword.getText().toString().trim();
+
+            if (DEBUG) {
+                email = "admin@admin.com";
+                password = "adminadmin";
+            }
 
             if (TextUtils.isEmpty(email)) {
                 eEmail.setError("Email is required!");

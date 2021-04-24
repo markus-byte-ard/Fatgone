@@ -90,19 +90,21 @@ public class FragmentProfile extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!editWeightInput.getText().toString().isEmpty()) {
-
                     argWeight = Double.parseDouble(editWeightInput.getText().toString());
                     yourWeight.setText("Weight: " + argWeight + " kg");
-                    argBmi = (argWeight / ((argHeight / 100) * (argHeight / 100)));
-                    argBmi = (Math.round(argBmi * 100.0) / 100.0);
-                    yourBmi.setText("BMI: " + String.valueOf(argBmi) + " kg/m^2");
+                    updateBmi();
                 }
             }
         });
     }
 
+    private void updateBmi() {
+        argBmi = (argWeight / ((argHeight / 100) * (argHeight / 100)));
+        argBmi = (Math.round(argBmi * 100.0) / 100.0);
+        yourBmi.setText("BMI: " + String.valueOf(argBmi) + " kg/m^2");
+    }
+
     public double getWeight(){
-        System.out.println("paino on "+argWeight);
         return argWeight;
     }
 }

@@ -13,7 +13,7 @@ public class User {
     public User() {
         this.setName("Adam");
         this.setWeight(80.0);
-        this.setHeight(1.80);
+        this.setHeight(180);
         this.setBmi(0);
     }
 
@@ -37,15 +37,15 @@ public class User {
     public void setBmi(double bmi) {
         this.bmi = bmi;
     }
-    public void setSleep() {
+    public void setSleep(double sleep) {
         this.sleep = sleep;
     }
 
-    public void setCalories(double bmi) {
+    public void setCalories(double calories) {
         this.calories = calories;
     }
 
-    public void setExercise(double bmi) {
+    public void setExercise(double exercise) {
         this.exercise = exercise;
     }
 
@@ -55,7 +55,7 @@ public class User {
     public double getCalories() { return this.calories; }
     public double getSleep() { return this.sleep; }
     public String getName() { return this.name; }
-    public Double getWeight() { return this.weight; }
-    public Double getHeight() { return this.height; }
-    public Double getBmi() { return this.bmi; }
+    public double getWeight() { return this.weight; }
+    public double getHeight() { return this.height; }
+    public double getBmi() { return this.bmi; }
 }

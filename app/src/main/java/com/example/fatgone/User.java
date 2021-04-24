@@ -37,15 +37,15 @@ public class User {
     public void setBmi(double bmi) {
         this.bmi = bmi;
     }
-    public void setSleep() {
+    public void setSleep(double sleep) {
         this.sleep = sleep;
     }
 
-    public void setCalories(double bmi) {
+    public void setCalories(double calories) {
         this.calories = calories;
     }
 
-    public void setExercise(double bmi) {
+    public void setExercise(double exercise) {
         this.exercise = exercise;
     }
 

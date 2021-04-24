@@ -28,7 +28,7 @@ import java.util.Map;
 public class FirebaseHandler {
     public static final String TAG = "FirebaseHandler";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public String UID; // TEMPORARY UID FOR TESTING
+    public String UID;
     private DocumentReference docRef;
     //@ServerTimestamp Date time;
     //@ServerTimestamp Timestamp time;

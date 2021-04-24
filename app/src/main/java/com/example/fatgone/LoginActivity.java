@@ -1,6 +1,5 @@
 package com.example.fatgone;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -27,7 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
-    private EditText eName;
+    private EditText eEmail;
     private EditText ePassword;
     private TextView eRegister;
     private ProgressBar eLoginProg;
@@ -39,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         loginButton = (Button) findViewById(R.id.LoginButton);
-        eName = (EditText) findViewById(R.id.etEmail);
+        eEmail = (EditText) findViewById(R.id.etEmail);
         ePassword = (EditText) findViewById(R.id.etPassword);
         eRegister = (TextView) findViewById(R.id.tvRegister);
         eLoginProg = (ProgressBar) findViewById(R.id.progressBarLogin);
@@ -48,11 +47,11 @@ public class LoginActivity extends AppCompatActivity {
 
         eRegister.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), RegistrationActivity.class)));
         loginButton.setOnClickListener(v -> {
-            String email = eName.getText().toString().trim();
+            String email = eEmail.getText().toString().trim();
             String password = ePassword.getText().toString().trim();
 
             if (TextUtils.isEmpty(email)) {
-                eName.setError("Email is required!");
+                eEmail.setError("Email is required!");
                 return;
             } if (TextUtils.isEmpty(password)) {
                 ePassword.setError("Password is required!");
@@ -77,6 +76,9 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         });
+    }
+    private boolean validate(String name, String password){
+        return credentials.verifyCredentials(name, password);
     }
 
     private String retrieveUID() {

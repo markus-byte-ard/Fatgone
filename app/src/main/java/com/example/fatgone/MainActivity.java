@@ -1,5 +1,9 @@
 package com.example.fatgone;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -40,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // FIREBASE //
     FirebaseHandler firebase = new FirebaseHandler();
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override

@@ -36,7 +36,6 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        eRegName = findViewById(R.id.etRegName);
         eRegPassword = findViewById(R.id.etRegPassword);
         eRegEmail = findViewById(R.id.etRegEmail);
         eLogin = findViewById(R.id.tvReturn2Login);
@@ -48,7 +47,6 @@ public class RegistrationActivity extends AppCompatActivity {
         eLogin.setOnClickListener(v -> startActivity(new Intent(RegistrationActivity.this, LoginActivity.class)));
         eRegister.setOnClickListener(v -> {
 
-            String regUsername = eRegName.getText().toString().trim();
             String regEmail = eRegEmail.getText().toString().trim();
             String regPassword = eRegPassword.getText().toString().trim();
 
@@ -77,5 +75,16 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
             });
         });
+
+    }
+
+    private boolean validate(String username, String password){
+
+        if(username.isEmpty() || password.length() < 8){
+            Toast.makeText(this, "Please enter all the details, password should be atleast 8 characters!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 }

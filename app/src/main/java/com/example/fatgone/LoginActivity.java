@@ -1,5 +1,6 @@
 package com.example.fatgone;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -76,9 +77,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         });
-    }
-    private boolean validate(String name, String password){
-        return credentials.verifyCredentials(name, password);
     }
 
     private String retrieveUID() {

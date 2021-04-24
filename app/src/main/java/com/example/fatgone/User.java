@@ -6,9 +6,9 @@ public class User {
     private double weight = 50;     //kg
     private double height = 170;    //cm
     private double bmi = 99;        //kg/m^2
-    private double exercise = 2;   //min
+    private double exercise = 2;    //min
     private double sleep = 5;       //h
-    private double calories = 200;       //
+    private double calories = 200;  //kCal
 
     public User() {
         this.setName("Adam");
@@ -18,6 +18,10 @@ public class User {
     }
 
     // SET METHODS
+    public void setUID (String UID) {
+        this.UID = UID;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -46,6 +50,7 @@ public class User {
     }
 
     // GET METHODS
+    public String getUID() { return this.UID; }
     public double getExercise() { return this.exercise; }
     public double getCalories() { return this.calories; }
     public double getSleep() { return this.sleep; }

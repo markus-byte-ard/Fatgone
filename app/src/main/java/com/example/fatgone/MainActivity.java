@@ -1,6 +1,7 @@
 package com.example.fatgone;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FirebaseHandler firebase = new FirebaseHandler();
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +52,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Retrieve UID passed by the log in activity
         String userUID = getIntent().getStringExtra("userUID");
+        curUser.setUID(userUID);
+
+        // FIREBASE TEST //
+        updateFirebaseUser(curUser);
 
         // Initialise drawer
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -147,5 +154,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         System.out.println("heippa calories: "+tempCalories);
 
     }
+
+
+
+    //////// FIREBASE ////////
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void updateFirebaseUser (User user) {
+        firebase.saveUser(user);
+    };
 
 }

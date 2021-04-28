@@ -141,8 +141,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void saveUserDataButton(View v) {
+    public void saveUserDataButton(View v) throws InterruptedException {
         saveUserData(curUser);
+        fetchNewestData(curUser);
     }
 
     private Map<String, Object> createMap(User user) {

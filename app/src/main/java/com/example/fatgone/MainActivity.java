@@ -71,12 +71,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //updateFirebaseUser(curUser);
         //saveUser(curUser);
         try {
-            curUser = fetchNewestData(curUser);
+            fetchNewestData(curUser);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        updateHomeFragment();
+        updateHomeFragment(curUser);
 
         //System.out.println("###################################" + curUser.getUID() + "###################################");
 
@@ -91,20 +91,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    public void updateHomeFragment () {
+    public void updateHomeFragment (User user) {
         // Load home fragment
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         newFrag = new FragmentHome();
 
         Bundle bundle = new Bundle();
-        bundle.putString("keyName", curUser.getName());
-        bundle.putDouble("keyBmi", curUser.getBmi());
-        bundle.putDouble("keyWeight", curUser.getWeight());
-        bundle.putDouble("keyHeight", curUser.getHeight());
-        bundle.putDouble("keySleep", curUser.getSleep());
-        bundle.putDouble("keyCalories", curUser.getCalories());
-        bundle.putDouble("keyExercise", curUser.getExercise());
+        bundle.putString("keyName", user.getName());
+        bundle.putDouble("keyBmi", user.getBmi());
+        bundle.putDouble("keyWeight", user.getWeight());
+        bundle.putDouble("keyHeight", user.getHeight());
+        bundle.putDouble("keySleep", user.getSleep());
+        bundle.putDouble("keyCalories", user.getCalories());
+        bundle.putDouble("keyExercise", user.getExercise());
 
         newFrag.setArguments(bundle);
         fragmentTransaction.replace(R.id.fragment_container, newFrag);
@@ -156,15 +156,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return userMap;
     }
 
-    public User fetchNewestData(User user) throws InterruptedException {
+    public void fetchNewestData(User user) throws InterruptedException {
         userUID = user.getUID();
-        AtomicReference<User> newUser = new AtomicReference<>();
 
         System.out.println(userUID);
         Query query = FirebaseFirestore.getInstance().document("users/" + userUID).collection("data").orderBy("epoch", Query.Direction.DESCENDING).limit(1);
 
         query.get().addOnCompleteListener(task -> {
-
+            User newUser = null;
             if (task.isSuccessful()) {
                 System.out.println(task.getResult());
                 for (DocumentSnapshot document : task.getResult()) {
@@ -172,24 +171,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if (document.exists()) {
                         System.out.println("MEMES");
                         Log.d(TAG, "#########################" + document.getId() + " => " + document.getData() + "#########################");
-                        newUser.set(createUserFromMap(document.getData()));
-                        System.out.println(newUser.get().getExercise());
-                        System.out.println("############### INSIDE ############" + newUser.get().getUID());
+                        newUser = createUserFromMap(document.getData());
+                        System.out.println(newUser.getExercise());
+                        System.out.println("############### INSIDE ############" + newUser.getUID());
                     } else {
                     }
+
                 }
             } else { //If no document was found, create new one
                 Log.w(TAG, "######################### Error getting documents. #########################", task.getException());
                 User nUser = new User();
                 nUser.setUID(userUID);
-                newUser.set(nUser);
             }
+            updateHomeFragment(newUser);
         });
-
-
-        System.out.println("############### OUTSIDE ############" + newUser.get().getUID());
-        return newUser.get();
     }
+
 
     private User createUserFromMap (Map <String, Object> data) {
         User user = new User();
@@ -251,7 +248,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             default:
                 newFrag = new FragmentHome();
-                updateHomeFragment();
+                try {
+                    fetchNewestData(curUser);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 return true;
         }
         Bundle bundle = new Bundle();

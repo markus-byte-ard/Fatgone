@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Map<String, Object> userMap = createMap(curUser);
 
         userUID = curUser.getUID();
-        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" + userUID + "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+        //System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" + userUID + "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 
         docRef = FirebaseFirestore.getInstance().document("users/" + userUID).collection("data").document(Long.toString(epoch));
 
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (task.isSuccessful()) {
                 if (!(task.getResult().isEmpty())) {
                     for (DocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, "#########################" + document.getId() + " => " + document.getData() + "#########################");
+                        //Log.d(TAG, "#########################" + document.getId() + " => " + document.getData() + "#########################");
                         newUser = createUserFromMap(document.getData());
 
                         //System.out.println("############### INSIDE ############" + newUser.getUID());

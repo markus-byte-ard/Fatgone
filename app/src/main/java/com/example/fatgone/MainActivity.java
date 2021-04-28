@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
@@ -32,6 +33,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -192,6 +195,109 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void loadFragment(User user, String mode) {
+        Query query = FirebaseFirestore.getInstance().document("users/" + userUID).collection("data").orderBy("epoch", Query.Direction.DESCENDING).limit(5);
+
+        query.get().addOnCompleteListener(task -> {
+            ArrayList<User> list = new ArrayList<>();
+
+            System.out.println("THE BIGGER MEMES");
+            if (task.isSuccessful()) {
+                System.out.println("THE BIG MEMES");
+                if (!(task.getResult().isEmpty())) {
+                    for (DocumentSnapshot document : task.getResult()) {
+                        list.add(createUserFromMap(document.getData()));
+                    }
+                } else {
+                    /*
+                    //If no document was found, create new one
+                    User nUser = new User();
+                    nUser.setUID(userUID);
+                    saveUserData(nUser);
+                    updateHomeFragment(nUser);
+                    Log.w(TAG, "######################### New user created. #########################", task.getException());*/
+                }
+            } else {
+                Log.w(TAG, "######################### Error getting documents. #########################", task.getException());
+            }
+
+            switch (mode) {
+                case "exercise":
+                    switchFragment(list, "exercise");
+                    break;
+                case "sleep":
+                    switchFragment(list, "sleep");
+                    break;
+                case "calories":
+                    switchFragment(list, "calories");
+                    break;
+                case "profile":
+                    switchFragment(list, "profile");
+                    break;
+            }
+
+        }); ////////////////////
+    }
+
+    private void switchFragment(ArrayList<User> list, String mode) {
+        // Load home fragment
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment newFrag = null;
+
+        switch (mode) {
+            case "exercise":
+                newFrag = new FragmentExercise();
+                break;
+            case "sleep":
+                newFrag = new FragmentSleep();
+                break;
+            case "calories":
+                newFrag = new FragmentCalories();
+                break;
+            case "profile":
+                newFrag = new FragmentProfile();
+                break;
+        }
+
+        Bundle bundle = new Bundle();
+        ArrayList<String> newList = new ArrayList<>();
+
+        System.out.println("################################" + list.size());
+
+        for (User user : list) {
+            switch (mode) {
+                case "exercise":
+                    newList.add(Double.toString(user.getExercise()));
+                    break;
+                case "sleep":
+                    newList.add(Double.toString(user.getSleep()));
+                    break;
+                case "calories":
+                    newList.add(Double.toString(user.getCalories()));
+                    break;
+                case "profile":
+                    newList.add(Double.toString(user.getBmi()));
+                    break;
+            }
+        }
+        Collections.reverse(list);
+
+        bundle.putStringArrayList("keyGraph", newList);
+        bundle.putString("keyName", curUser.getName());
+        bundle.putDouble("keyBmi", curUser.getBmi());
+        bundle.putDouble("keyWeight", curUser.getWeight());
+        bundle.putDouble("keyHeight", curUser.getHeight());
+        bundle.putDouble("keySleep", curUser.getSleep());
+        bundle.putDouble("keyCalories", curUser.getCalories());
+        bundle.putDouble("keyExercise", curUser.getExercise());
+
+        newFrag.setArguments(bundle);
+        fragmentTransaction.replace(R.id.fragment_container, newFrag);
+        fragmentTransaction.commit();
+    }
+
 
     private User createUserFromMap(Map<String, Object> data) {
         User user = new User();
@@ -236,16 +342,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         */
         switch (item.getItemId()) {
             case R.id.nav_exercise:
-                newFrag = new FragmentExercise();
+                loadFragment(curUser, "exercise");
                 break;
             case R.id.nav_calories:
-                newFrag = new FragmentCalories();
+                loadFragment(curUser, "calories");
                 break;
             case R.id.nav_sleep:
-                newFrag = new FragmentSleep();
+                loadFragment(curUser, "sleep");
                 break;
             case R.id.nav_profile:
-                newFrag = new FragmentProfile();
+                loadFragment(curUser, "profile");
                 break;
             case R.id.nav_LogOut:
                 FirebaseAuth.getInstance().signOut();
@@ -256,23 +362,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 newFrag = new FragmentHome();
                 try {
                     fetchNewestData(curUser);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("keyName", curUser.getName());
+                    bundle.putDouble("keyBmi", curUser.getBmi());
+                    bundle.putDouble("keyWeight", curUser.getWeight());
+                    bundle.putDouble("keyHeight", curUser.getHeight());
+                    bundle.putDouble("keySleep", curUser.getSleep());
+                    bundle.putDouble("keyCalories", curUser.getCalories());
+                    bundle.putDouble("keyExercise", curUser.getExercise());
+                    newFrag.setArguments(bundle);
+
+                    fragmentTransaction.replace(R.id.fragment_container, newFrag);
+                    fragmentTransaction.commit();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 return true;
         }
-        Bundle bundle = new Bundle();
-        bundle.putString("keyName", curUser.getName());
-        bundle.putDouble("keyBmi", curUser.getBmi());
-        bundle.putDouble("keyWeight", curUser.getWeight());
-        bundle.putDouble("keyHeight", curUser.getHeight());
-        bundle.putDouble("keySleep", curUser.getSleep());
-        bundle.putDouble("keyCalories", curUser.getCalories());
-        bundle.putDouble("keyExercise", curUser.getExercise());
-        newFrag.setArguments(bundle);
 
-        fragmentTransaction.replace(R.id.fragment_container, newFrag);
-        fragmentTransaction.commit();
         return true;
     }
     //gets data back from fragment_profile and sets them to current user

@@ -16,6 +16,8 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.util.ArrayList;
+
 public class FragmentSleep extends Fragment {
     View view;
     private Button setSleep;
@@ -46,14 +48,16 @@ public class FragmentSleep extends Fragment {
         setSleep = (Button) view.findViewById(R.id.setSleep);
         graph = (GraphView) view.findViewById(R.id.graph);
 
-        // Graph test
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3),
-                new DataPoint(3, 2),
-                new DataPoint(4, 6)
-        });
+        // Add graph
+        ArrayList<String> list = getArguments().getStringArrayList("keyGraph");
+        DataPoint[] data = new DataPoint[list.size()];
+        int counter = 0;
+        for( String item : list) {
+            data[counter] = new DataPoint(counter, Double.parseDouble(item));
+            System.out.println(data[counter]);
+            counter++;
+        }
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(data);
         graph.addSeries(series);
 
         argSleep = (Math.round(argSleep * 100.0) / 100.0);

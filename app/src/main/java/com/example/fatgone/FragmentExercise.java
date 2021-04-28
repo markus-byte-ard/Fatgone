@@ -53,7 +53,6 @@ public class FragmentExercise extends Fragment {
         int counter = 0;
         for( String item : list) {
             data[counter] = new DataPoint(counter, Double.parseDouble(item));
-            System.out.println(data[counter]);
             counter++;
         }
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(data);

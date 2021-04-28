@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
-    private boolean DEBUG = false;
+    private boolean DEBUG = true;
     private Button loginButton;
     private EditText eEmail;
     private EditText ePassword;
@@ -66,8 +66,6 @@ public class LoginActivity extends AppCompatActivity {
             }
             //Progress bar will tell the user something is happening.
             eLoginProg.setVisibility(View.VISIBLE);
-            System.out.println(email);
-            System.out.println(password);
             //Firebase method sign in will sign the user in
             fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override

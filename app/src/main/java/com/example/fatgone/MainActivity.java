@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        // Inialize toolbar
+        // Initialize toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
@@ -82,8 +82,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             e.printStackTrace();
         }
 
-        //System.out.println("###################################" + curUser.getUID() + "###################################");
-
         // Initialise drawer
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -92,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-
     }
 
     private void updateHomeFragment(User user) {
@@ -122,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Map<String, Object> userMap = createMap(curUser);
 
-        //userUID = curUser.getUID();
         userUID = curUser.getUID();
         System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" + userUID + "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 
@@ -170,17 +166,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Query query = FirebaseFirestore.getInstance().document("users/" + userUID).collection("data").orderBy("epoch", Query.Direction.DESCENDING).limit(1);
 
         query.get().addOnCompleteListener(task -> {
-            User newUser = null;
-            System.out.println("THE BIGGER MEMES");
+            User newUser;
             if (task.isSuccessful()) {
-                System.out.println("THE BIG MEMES");
                 if (!(task.getResult().isEmpty())) {
                     for (DocumentSnapshot document : task.getResult()) {
-                        System.out.println("MEMES");
                         Log.d(TAG, "#########################" + document.getId() + " => " + document.getData() + "#########################");
                         newUser = createUserFromMap(document.getData());
-                        System.out.println(newUser.getExercise());
-                        System.out.println("############### INSIDE ############" + newUser.getUID());
+
+                        //System.out.println("############### INSIDE ############" + newUser.getUID());
                         updateHomeFragment(newUser);
                     }
                 } else {
@@ -204,9 +197,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         query.get().addOnCompleteListener(task -> {
             ArrayList<User> list = new ArrayList<>();
 
-            System.out.println("THE BIGGER MEMES");
             if (task.isSuccessful()) {
-                System.out.println("THE BIG MEMES");
                 if (!(task.getResult().isEmpty())) {
                     for (DocumentSnapshot document : task.getResult()) {
                         list.add(createUserFromMap(document.getData()));
@@ -246,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Load home fragment
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment newFrag = null;
+        Fragment newFrag;
 
         switch (mode) {
             case "exercise":
@@ -261,12 +252,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case "profile":
                 newFrag = new FragmentProfile();
                 break;
+            default:
+                newFrag = new FragmentHome();
         }
 
         Bundle bundle = new Bundle();
         ArrayList<String> newList = new ArrayList<>();
-
-        System.out.println("################################" + list.size());
 
         for (User user : list) {
             switch (mode) {
@@ -394,10 +385,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         curUser.setBmi(frag.sendFragBMI());
         curUser.setName(frag.sendFragName());
         //testi
+        /*
         System.out.println("paino on "+frag.sendFragWeight());
         System.out.println("pituus on "+frag.sendFragHeight());
         System.out.println("bmi on "+frag.sendFragBMI());
         System.out.println("nimi on "+frag.sendFragName());
+        */
 
     }
     public void getFragCalories(View view){

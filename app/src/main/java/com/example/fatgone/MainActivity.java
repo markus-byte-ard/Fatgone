@@ -122,7 +122,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Map<String, Object> userMap = createMap(curUser);
 
-        userUID = user.getUID();
+        //userUID = curUser.getUID();
+        userUID = curUser.getUID();
         System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" + userUID + "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 
         docRef = FirebaseFirestore.getInstance().document("users/" + userUID).collection("data").document(Long.toString(epoch));

@@ -1,19 +1,21 @@
 package com.example.fatgone;
 
 public class User {
-    private String UID = "";
-    private String name = "";
-    private double weight = 0;     //kg
-    private double height = 0;    //cm
-    private double bmi = 0;        //kg/m^2
-    private double exercise = 0;    //min
-    private double sleep = 0;       //h
-    private double calories = 0;  //kCal
-    private long epoch = 0;
-
+    private String UID ;
+    private String name ;
+    private double weight ;     //kg
+    private double height ;    //cm
+    private double bmi ;        //kg/m^2
+    private double exercise;    //min
+    private double sleep;       //h
+    private double calories;  //kCal
+    private long epoch ;
+/*
     public User() {
         this.setName("Adam");
     }
+
+ */
 
     // SET METHODS
     public void setUID (String UID) {

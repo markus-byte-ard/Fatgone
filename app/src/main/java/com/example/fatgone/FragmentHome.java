@@ -39,8 +39,8 @@ public class FragmentHome extends Fragment {
         tvSleep = view.findViewById(R.id.field_sleep);
         tvExercise = view.findViewById(R.id.field_exercise);
         // Set TextViews
-        tvCalories.setText(""+argCalories+" Cal");
-        tvSleep.setText(""+argSleep+" hours");
-        tvExercise.setText(""+argExercise+" min");
+        tvCalories.setText(""+argCalories+" Calories");
+        tvSleep.setText(""+argSleep+" Hours");
+        tvExercise.setText(""+argExercise+" Minutes");
     }
 }

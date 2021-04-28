@@ -21,7 +21,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Todays stats"
+        android:text="Today's stats"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
@@ -62,7 +62,7 @@
                 android:layout_margin="12dp"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-medium"
-                android:hint="0 min"
+                android:hint="0 Minutes"
                 android:textSize="24sp" />
         </TableRow>
 
@@ -86,7 +86,7 @@
                 android:layout_margin="12dp"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-medium"
-                android:hint="0 Cal"
+                android:hint="0 Calories"
                 android:textSize="24sp" />
         </TableRow>
 
@@ -98,7 +98,7 @@
 
             <TextView
                 android:id="@+id/textSleep"
-                android:layout_width="wrap_content"
+                android:layout_width="96dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
                 android:fontFamily="sans-serif-medium"
@@ -112,7 +112,7 @@
                 android:layout_margin="12dp"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-medium"
-                android:hint="0 hours"
+                android:hint="0 Hours"
                 android:textSize="24sp" />
         </TableRow>
 

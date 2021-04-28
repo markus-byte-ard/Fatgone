@@ -73,4 +73,15 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
+
+    <TextView
+        android:id="@+id/passworReq"
+        android:layout_width="289dp"
+        android:layout_height="62dp"
+        android:text="Password must be at least 12 character, contain one special character, one lowercase letter, one uppercase letter and one number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarRegister"
+        app:layout_constraintVertical_bias="0.425" />
 </androidx.constraintlayout.widget.ConstraintLayout>

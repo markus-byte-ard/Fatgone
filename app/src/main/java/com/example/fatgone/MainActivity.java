@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
             }
         }
-        Collections.reverse(list);
+        Collections.reverse(newList);
 
         bundle.putStringArrayList("keyGraph", newList);
         bundle.putString("keyName", curUser.getName());

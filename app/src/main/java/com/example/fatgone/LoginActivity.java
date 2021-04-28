@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
-    private boolean DEBUG = true;
+    private boolean DEBUG = false;
     private Button loginButton;
     private EditText eEmail;
     private EditText ePassword;

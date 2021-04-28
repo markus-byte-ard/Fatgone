@@ -22,20 +22,21 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@drawable/fatgone_blank">
 
                     <Button
                         android:id="@+id/setHeight"
-                        android:layout_width="125dp"
-                        android:layout_height="36dp"
+                        android:layout_width="65dp"
+                        android:layout_height="40dp"
                         android:onClick="getFragProfile"
-                        android:text="Set Height"
+                        android:text="Set"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.944"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_bias="0.473"
+                        app:layout_constraintStart_toEndOf="@+id/editHeight"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.38" />
+                        app:layout_constraintVertical_bias="0.382" />
 
                     <ImageView
                         android:id="@+id/imageView"
@@ -58,31 +59,31 @@
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.678"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_bias="0.288"
+                        app:layout_constraintStart_toEndOf="@+id/imageView"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.128" />
+                        app:layout_constraintVertical_bias="0.044" />
 
                     <Button
                         android:id="@+id/setWeight"
-                        android:layout_width="125dp"
-                        android:layout_height="36dp"
+                        android:layout_width="65dp"
+                        android:layout_height="40dp"
                         android:onClick="getFragProfile"
-                        android:text="Set Weight"
+                        android:text="Set"
                         android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.944"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.467"
+                        app:layout_constraintHorizontal_bias="0.47"
+                        app:layout_constraintStart_toEndOf="@+id/editWeight"
+                        app:layout_constraintTop_toBottomOf="@+id/setHeight"
+                        app:layout_constraintVertical_bias="0.018"
                         tools:visibility="visible" />
 
                     <TextView
                         android:id="@+id/yourHeight"
                         android:layout_width="145dp"
                         android:layout_height="24dp"
-                        android:text="Height: 0 cm"
+                        android:text="Height: 0 m"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -108,93 +109,98 @@
                         android:id="@+id/history"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="43dp"
                         android:text="History"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.073"
+                        app:layout_constraintHorizontal_bias="0.054"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.666" />
+                        app:layout_constraintTop_toBottomOf="@+id/yourBmi"
+                        app:layout_constraintVertical_bias="0.0" />
 
                     <TextView
                         android:id="@+id/yourBmi"
-                        android:layout_width="150dp"
-                        android:layout_height="32dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="26dp"
                         android:text="BMI: 0 kg/m^2"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.053"
+                        app:layout_constraintHorizontal_bias="0.047"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.568" />
+                        app:layout_constraintTop_toBottomOf="@+id/yourWeight"
+                        app:layout_constraintVertical_bias="0.15" />
 
                     <EditText
                         android:id="@+id/editHeight"
                         android:layout_width="103dp"
                         android:layout_height="39dp"
                         android:ems="10"
-                        android:hint="Height:"
+                        android:hint="give height"
                         android:inputType="number|numberDecimal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.542"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_bias="0.2"
+                        app:layout_constraintStart_toEndOf="@+id/yourHeight"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.382" />
+                        app:layout_constraintVertical_bias="0.381" />
 
                     <EditText
                         android:id="@+id/editWeight"
                         android:layout_width="103dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="Weight:"
+                        android:hint="give weight"
                         android:inputType="number|numberDecimal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.542"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.461" />
+                        app:layout_constraintHorizontal_bias="0.19"
+                        app:layout_constraintStart_toEndOf="@+id/yourWeight"
+                        app:layout_constraintTop_toBottomOf="@+id/editHeight"
+                        app:layout_constraintVertical_bias="0.02" />
 
                     <Button
                         android:id="@+id/setName"
                         android:layout_width="159dp"
                         android:layout_height="39dp"
+                        android:layout_marginTop="17dp"
                         android:onClick="getFragProfile"
                         android:text="Change name"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.805"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.274" />
+                        app:layout_constraintHorizontal_bias="0.443"
+                        app:layout_constraintStart_toEndOf="@+id/imageView"
+                        app:layout_constraintTop_toBottomOf="@+id/editName"
+                        app:layout_constraintVertical_bias="0.01" />
 
                     <EditText
                         android:id="@+id/editName"
                         android:layout_width="170dp"
                         android:layout_height="43dp"
+                        android:layout_marginTop="17dp"
                         android:ems="10"
                         android:hint="Name:"
                         android:inputType="textPersonName"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.842"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.2" />
+                        app:layout_constraintHorizontal_bias="0.506"
+                        app:layout_constraintStart_toEndOf="@+id/imageView"
+                        app:layout_constraintTop_toBottomOf="@+id/yourName"
+                        app:layout_constraintVertical_bias="0.0" />
 
                     <Button
                         android:id="@+id/setPicture"
-                        android:layout_width="96dp"
-                        android:layout_height="39dp"
-                        android:text="Change"
+                        android:layout_width="49dp"
+                        android:layout_height="46dp"
+                        android:background="@drawable/round_button"
+                        android:text="+"
+                        android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.133"
+                        app:layout_constraintHorizontal_bias="0.359"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.275" />
+                        app:layout_constraintTop_toTopOf="@+id/imageView"
+                        app:layout_constraintVertical_bias="0.181" />
 
                     <com.jjoe64.graphview.GraphView
                         android:id="@+id/graph"

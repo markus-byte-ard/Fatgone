@@ -51,12 +51,7 @@ public class LoginActivity extends AppCompatActivity {
             //Debug was so that we didn't need to write credentials over and over again
             if (DEBUG) {
                 email = "admin@admin.com";
-                password = "adminadmin";
-            }
-
-            if (DEBUG) {
-                email = "admin@admin.com";
-                password = "adminadmin";
+                password = "adminadminadmin";
             }
 
             if (TextUtils.isEmpty(email)) {
@@ -66,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                 ePassword.setError("Password is required!");
                 return;
             } if (password.length() < 12) {
-                ePassword.setError("Password must be at least 8 characters!");
+                ePassword.setError("Password must be at least 12 characters!");
                 return;
             }
             //Progress bar will tell the user something is happening.

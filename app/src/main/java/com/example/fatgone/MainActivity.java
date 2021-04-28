@@ -43,16 +43,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FragmentTransaction fragmentTransaction;
     Fragment newFrag;
 
-    public static final String TAG = "FirebaseHandler";
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
     public String userUID;
     private DocumentReference docRef;
 
+    FileHandler filehandler = new FileHandler(MainActivity.this);
+
     // USER //
     User curUser = new User();
-
-    // FIREBASE //
-    //FirebaseHandler firebase = new FirebaseHandler();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -65,20 +62,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Retrieve UID passed by the log in activity
         String userUID = getIntent().getStringExtra("userUID");
         curUser.setUID(userUID);
-        //System.out.println( curUser.getUID());
-
-        // FIREBASE TEST //
-        //updateFirebaseUser(curUser);
-        //saveUser(curUser);
-        try {
-            fetchNewestData(curUser);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         updateHomeFragment(curUser);
-
-        //System.out.println("###################################" + curUser.getUID() + "###################################");
 
         // Initialise drawer
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -112,31 +97,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void saveUserData () {
-        long epoch = Instant.now().getEpochSecond();
-        curUser.setEpoch(epoch);
-
-        Map<String, Object> userMap = createMap(curUser);
-
-        userUID = curUser.getUID();
-        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" + userUID + "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-
-        docRef = FirebaseFirestore.getInstance().document("users/" + userUID).collection("data").document(Long.toString(epoch));
-
-        docRef.set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "############################ User has been saved ############################");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "############################ Error while saving user ############################", e);
-            }
-        });
-    };
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void saveUserDataButton(View v) {
         saveUserData();
     }
@@ -155,38 +115,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return userMap;
     }
-
-    public void fetchNewestData(User user) throws InterruptedException {
-        userUID = user.getUID();
-
-        System.out.println(userUID);
-        Query query = FirebaseFirestore.getInstance().document("users/" + userUID).collection("data").orderBy("epoch", Query.Direction.DESCENDING).limit(1);
-
-        query.get().addOnCompleteListener(task -> {
-            User newUser = null;
-            if (task.isSuccessful()) {
-                System.out.println(task.getResult());
-                for (DocumentSnapshot document : task.getResult()) {
-                    System.out.println("THE BIG MEMES");
-                    if (document.exists()) {
-                        System.out.println("MEMES");
-                        Log.d(TAG, "#########################" + document.getId() + " => " + document.getData() + "#########################");
-                        newUser = createUserFromMap(document.getData());
-                        System.out.println(newUser.getExercise());
-                        System.out.println("############### INSIDE ############" + newUser.getUID());
-                    } else {
-                    }
-
-                }
-            } else { //If no document was found, create new one
-                Log.w(TAG, "######################### Error getting documents. #########################", task.getException());
-                User nUser = new User();
-                nUser.setUID(userUID);
-            }
-            updateHomeFragment(newUser);
-        });
-    }
-
 
     private User createUserFromMap (Map <String, Object> data) {
         User user = new User();
@@ -210,12 +138,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
-    /*
-    public void loadFragment (String fragName) {
-        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-        startActivity(intent);
-    }*/
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -248,11 +170,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             default:
                 newFrag = new FragmentHome();
-                try {
-                    fetchNewestData(curUser);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 return true;
         }
         Bundle bundle = new Bundle();

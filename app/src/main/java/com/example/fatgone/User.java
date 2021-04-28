@@ -10,7 +10,6 @@ public class User {
     private double sleep = 0;       //h
     private double calories = 0;  //kCal
     private long epoch = 0;
-
     /*
     public User() {
         this.setName("Adam");

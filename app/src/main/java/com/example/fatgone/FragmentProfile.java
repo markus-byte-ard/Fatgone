@@ -93,6 +93,8 @@ public class FragmentProfile extends Fragment {
 
         // Set textviews
         yourName.setText(argName);
+        argHeight = (Math.round(argHeight * 100.0) / 100.0);
+        argWeight = (Math.round(argWeight * 100.0) / 100.0);
         yourHeight.setText("Height: "+argHeight+" cm");
         yourWeight.setText("Weight: "+argWeight+" kg");
         argBmi = (Math.round(argBmi * 100.0) / 100.0);
@@ -129,6 +131,7 @@ public class FragmentProfile extends Fragment {
     public double sendFragWeight() {
         if (!editWeightInput.getText().toString().isEmpty()) {
             argWeight = Double.parseDouble(editWeightInput.getText().toString());
+            argWeight = (Math.round(argWeight * 100.0) / 100.0);
             yourWeight.setText("Weight: " + argWeight + " kg");
             updateBmi();
         }
@@ -138,6 +141,7 @@ public class FragmentProfile extends Fragment {
     public double sendFragHeight() {
         if (!editHeightInput.getText().toString().isEmpty()) {
             argHeight = Double.parseDouble(editHeightInput.getText().toString());
+            argHeight = (Math.round(argHeight * 100.0) / 100.0);
             yourHeight.setText("Weight: " + argHeight + " kg");
             updateBmi();
         }

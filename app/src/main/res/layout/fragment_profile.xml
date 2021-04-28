@@ -25,19 +25,6 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/fatgone_blank">
 
-                    <Button
-                        android:id="@+id/setHeight"
-                        android:layout_width="65dp"
-                        android:layout_height="40dp"
-                        android:onClick="getFragProfile"
-                        android:text="Set"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.473"
-                        app:layout_constraintStart_toEndOf="@+id/editHeight"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.382" />
-
                     <ImageView
                         android:id="@+id/imageView"
                         android:layout_width="150dp"
@@ -75,8 +62,6 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.47"
                         app:layout_constraintStart_toEndOf="@+id/editWeight"
-                        app:layout_constraintTop_toBottomOf="@+id/setHeight"
-                        app:layout_constraintVertical_bias="0.018"
                         tools:visibility="visible" />
 
                     <TextView
@@ -165,7 +150,7 @@
                         android:layout_height="39dp"
                         android:layout_marginTop="17dp"
                         android:onClick="getFragProfile"
-                        android:text="Change name"
+                        android:text="Update Profile"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.443"

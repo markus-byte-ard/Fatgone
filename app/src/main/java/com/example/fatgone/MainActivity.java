@@ -293,6 +293,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bundle.putDouble("keyCalories", curUser.getCalories());
         bundle.putDouble("keyExercise", curUser.getExercise());
 
+        System.out.println(curUser.getName() + "##" + curUser.getWeight() + "##" + curUser.getHeight());
+
         newFrag.setArguments(bundle);
         fragmentTransaction.replace(R.id.fragment_container, newFrag);
         fragmentTransaction.commit();
@@ -310,6 +312,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         user.setEpoch((long) data.get("epoch"));
         user.setExercise((double) data.get("exercise"));
         user.setSleep((double) data.get("sleep"));
+
+        curUser = user;
 
         return user;
     }
@@ -384,6 +388,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
     //gets data back from fragment_profile and sets them to current user
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void getFragProfile(View view){
         fragmentManager = getSupportFragmentManager();
         FragmentProfile frag = (FragmentProfile) fragmentManager.findFragmentById(R.id.fragment_container); //Retrieve the fragment and save it into a variable
@@ -392,6 +397,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         curUser.setBmi(frag.sendFragBMI());
         curUser.setName(frag.sendFragName());
         //testi
+
+        saveUserData(curUser);
+
         System.out.println("paino on "+frag.sendFragWeight());
         System.out.println("pituus on "+frag.sendFragHeight());
         System.out.println("bmi on "+frag.sendFragBMI());

@@ -56,10 +56,14 @@ public class FragmentProfile extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         // Get data from bundle
+
         argName = getArguments().getString("keyName");
         argWeight = getArguments().getDouble("keyWeight");
         argHeight = getArguments().getDouble("keyHeight");
         argBmi = getArguments().getDouble("keyBmi");
+
+        //System.out.println(argName + "##" + Double.toString(argWeight) + "##" + Double.toString(argHeight));
+
         // Inialize views
         yourName = (TextView) view.findViewById(R.id.yourName);
         yourWeight = (TextView) view.findViewById(R.id.yourWeight);
@@ -68,8 +72,8 @@ public class FragmentProfile extends Fragment {
         editHeightInput = (EditText) view.findViewById(R.id.editHeight);
         editWeightInput = (EditText) view.findViewById(R.id.editWeight);
         editNameInput = (EditText) view.findViewById(R.id.editName);
-        setHeight = (Button) view.findViewById(R.id.setHeight);
-        setWeight = (Button) view.findViewById(R.id.setWeight);
+        //setHeight = (Button) view.findViewById(R.id.setHeight);
+        //setWeight = (Button) view.findViewById(R.id.setWeight);
         setName = (Button) view.findViewById(R.id.setName);
         setPicture = (Button) view.findViewById(R.id.setPicture);
         yourPicture = (ImageView) view.findViewById(R.id.imageView);
@@ -119,7 +123,7 @@ public class FragmentProfile extends Fragment {
     private void updateBmi() {
         argBmi = (argWeight / ((argHeight / 100) * (argHeight / 100)));
         argBmi = (Math.round(argBmi * 100.0) / 100.0);
-        yourBmi.setText("BMI: " + String.valueOf(argBmi) + " kg/m^2");
+        yourBmi.setText("BMI: " + argBmi + " kg/m^2");
     }
     // Sends weight
     public double sendFragWeight() {

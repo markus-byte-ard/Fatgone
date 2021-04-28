@@ -406,19 +406,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         System.out.println("nimi on "+frag.sendFragName());
 
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void getFragCalories(View view){
         fragmentManager = getSupportFragmentManager();
         FragmentCalories frag = (FragmentCalories) fragmentManager.findFragmentById(R.id.fragment_container); //Retrieve the fragment and save it into a variable
         curUser.setCalories(frag.sendFragCalories());
+
+        saveUserData(curUser);
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void getFragSleep(View view){
         fragmentManager = getSupportFragmentManager();
         FragmentSleep frag = (FragmentSleep) fragmentManager.findFragmentById(R.id.fragment_container); //Retrieve the fragment and save it into a variable
         curUser.setSleep(frag.sendFragSleep());
+
+        saveUserData(curUser);
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void getFragExercise(View view){
         fragmentManager = getSupportFragmentManager();
         FragmentExercise frag = (FragmentExercise) fragmentManager.findFragmentById(R.id.fragment_container); //Retrieve the fragment and save it into a variable
         curUser.setExercise(frag.sendFragExercise());
+
+        saveUserData(curUser);
     }
 }

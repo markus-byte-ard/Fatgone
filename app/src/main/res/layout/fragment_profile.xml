@@ -51,19 +51,6 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.044" />
 
-                    <Button
-                        android:id="@+id/setWeight"
-                        android:layout_width="65dp"
-                        android:layout_height="40dp"
-                        android:onClick="getFragProfile"
-                        android:text="Set"
-                        android:visibility="visible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.47"
-                        app:layout_constraintStart_toEndOf="@+id/editWeight"
-                        tools:visibility="visible" />
-
                     <TextView
                         android:id="@+id/yourHeight"
                         android:layout_width="145dp"

@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         long epoch = Instant.now().getEpochSecond();
         user.setEpoch(epoch);
 
-        Map<String, Object> userMap = createMap(curUser);
+        Map<String, Object> userMap = createMap(user);
 
         userUID = user.getUID();
         System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" + userUID + "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
@@ -241,7 +241,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void switchFragment(ArrayList<User> list, String mode) {
-        // Load home fragment
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         Fragment newFrag = null;
@@ -366,7 +365,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 newFrag = new FragmentHome();
                 try {
                     fetchNewestData(curUser);
-
+                    /*
                     Bundle bundle = new Bundle();
                     bundle.putString("keyName", curUser.getName());
                     bundle.putDouble("keyBmi", curUser.getBmi());
@@ -375,7 +374,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     bundle.putDouble("keySleep", curUser.getSleep());
                     bundle.putDouble("keyCalories", curUser.getCalories());
                     bundle.putDouble("keyExercise", curUser.getExercise());
-                    newFrag.setArguments(bundle);
+                    newFrag.setArguments(bundle);*/
 
                     fragmentTransaction.replace(R.id.fragment_container, newFrag);
                     fragmentTransaction.commit();
